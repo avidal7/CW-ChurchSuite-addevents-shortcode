@@ -3,8 +3,8 @@ Plugin Name: Add ChurchSuite events shortcode
 Plugin URI: https://ChurchWeb.uk
 Description: Presents events from a ChurchSuite account using a shortcode in posts or pages.
 Tags: churchsuite, events
-Version: 1.2.2
-Stable tag: v1.2.2
+Version: 1.2.3
+Stable tag: v1.2.3
 Author: ChurchWeb
 Author URI: https://ChurchWeb.uk
 License: GPL2 or later
@@ -81,3 +81,7 @@ There are some additional parameters you can pass:
 = 1.2.2 =
 
 * Updated "missing site parameter" error message, to "missing account parameter"
+
+= 1.2.3 =
+
+* Improved time display on event listing
