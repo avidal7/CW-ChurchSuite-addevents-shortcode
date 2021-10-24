@@ -1,4 +1,17 @@
-
+/*
+Plugin Name: Add ChurchSuite events shortcode
+Plugin URI: https://ChurchWeb.uk
+Description: Presents events from a ChurchSuite account using a shortcode in posts or pages.
+Version: 1.2.2
+Stable tag: v1.2.2
+Author: ChurchWeb
+Author URI: https://ChurchWeb.uk
+License: GPL2
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: CWChurchSuiteEventsSC
+Domain Path: /languages
+Requires at least: 5.7
+*/
 
 === Include ChurchSuite Events ===
 Contributors: jacksonj04
