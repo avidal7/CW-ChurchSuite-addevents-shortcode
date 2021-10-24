@@ -240,7 +240,7 @@ function cs_events_shortcode($atts = [])
 
             $output .=
                 '<span class="cs_events--event--time">' .
-                date('g.i a ', $start_time);
+                date('g.i a: ', $start_time);
 
             if ($show_end_times) {
                 $output .=
