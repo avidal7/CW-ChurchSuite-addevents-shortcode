@@ -4,8 +4,7 @@ Plugin Name: Add ChurchSuite events shortcode
 Plugin URI: https://ChurchWeb.uk
 Description: Presents events from a ChurchSuite account using a shortcode in posts or pages.
 Tags: churchsuite, events
-Version: 1.2.2
-Stable tag: v1.2.2
+Version: 1.2.3.1
 Author: ChurchWeb
 Author URI: https://ChurchWeb.uk
 License: GPL2 or later
