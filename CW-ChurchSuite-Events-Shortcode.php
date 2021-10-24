@@ -1,13 +1,22 @@
 <?php
 /*
-Plugin Name: Include ChurchSuite Events
-Plugin URI: https://github.com/whitkirkchurch/include-churchsuite-events
-Description: Gets a list of events from a ChurchSuite account, and includes it as part of a post or page.
+Plugin Name: Add ChurchSuite events shortcode
+Plugin URI: https://ChurchWeb.uk
+Description: Presents events from a ChurchSuite account using a shortcode in posts or pages.
+Tags: churchsuite, events
 Version: 1.2.2
-Author: St Mary's Church, Whitkirk
-Author URI: https://whitkirkchurch.org.uk
-License:     GPL-2.0+
-License URI: http://www.gnu.org/licenses/gpl-2.0.txt
+Stable tag: v1.2.2
+Author: ChurchWeb
+Author URI: https://ChurchWeb.uk
+License: GPL2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Copyright: 2021 ChurchWeb.uk
+Text Domain: CWChurchSuiteEventsSC
+Domain Path: /languages
+Requires at least: 5.7
+
+Originally Forked from https://github.com/whitkirkchurch/include-churchsuite-events
+Contributors: jacksonj04
 */
 
 function limit($iterable, $limit)
