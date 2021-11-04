@@ -1,10 +1,10 @@
 
-Plugin Name: Add ChurchSuite events shortcode
+Plugin Name: Add ChurchSuite events shortcode 11432a.dev
 Plugin URI: https://ChurchWeb.uk
-Description: Presents events from a ChurchSuite account using a shortcode in posts or pages.
+Description: Presents events from a ChurchSuite account using a shortcode in posts or pages. Dev Branch 11432a.dev
 Tags: churchsuite, events
-Version: 1.2.3.1
-Stable tag: v1.2.3.1
+Version: 0.1.1
+Stable tag: v0.1.1
 Author: ChurchWeb
 Author URI: https://ChurchWeb.uk
 License: GPL2 or later
@@ -23,65 +23,20 @@ Gets a list of events from a ChurchSuite account, and includes it as part of a p
 
 Also embeds a JSON-LD representation of the event, which search engines like Google can use to [do interesting things](https://developers.google.com/search/docs/data-types/event).
 
-== Installation ==
-
-1. Upload the plugin files to the `/wp-content/plugins/plugin-name` directory, or install the plugin through the WordPress plugins screen directly.
-1. Activate the plugin through the 'Plugins' screen in WordPress
-
-== Usage ==
-
-To include a list of events, add the `[churchsuite_events]` shortcode to a page.
-
-You _must_ include the `account` parameter, giving your ChurchSuite account ID. For example, for the ChurchSuite account "canterbury.churchsuite.co.uk" you would use:
-
-```[churchsuite_events account="canterbury"]```
-
-You can also use any parameters listed under the *Calendar JSON feed* section of the [ChurchSuite API embed documentation](https://github.com/ChurchSuite/churchsuite-api/blob/master/modules/embed.md#calendar-json-feed). For example:
-
-```[churchsuite_events account="canterbury" category="2" featured="1"]```
-
-will only include events from category '2', which are featured.
-
-There are some additional parameters you can pass:
-
-* `link_titles`: Turn the title of each event in the list into a link to the ChurchSuite event page. Defaults to false.
-* `show_date`: Display the dates of events. Defaults to true.
-* `show_years`: If set to `always`, will always show the year in each date. If set to `different`, will only show years in dates where they are not the current year. Defaults to false.
-* `show_end_times`: Display the time an event is scheduled to end. Defaults to false.
-* `show_locations`: Display details of an event's location. Defaults to false.
-* `show_descriptions`: Display and event's description if given. Defaults to true.
 
 == Changelog ==
 
-= 1.0 =
+= 0.1.0 =
 
-* Added a shortcode to embed a list of events from ChurchSuite into a page or post.
+* Bug Fix: Corrected time format
 
-= 1.1 =
+= 0.1.1 =
 
-* Adds `show_date` option
-* Adds `show_location` option
-* Adds `show_description` option
-* Fixes some timezone uncertainty
-* Fixes dates not being correctly presented as ISO 8601
-* Adds image to JSON-LD representation where known.
-* Adds support for `eventAttendanceMode` and `eventStatus` parameters in JSON-LD.
-* Updates date and time format to match preferred style
+* Bug Fix: Inappropriate spacing
 
-= 1.2 =
+= Dev Branch 11432a.dev = 
+= based upon 0.1.1
 
-* Rename `site` to `account` to be more consistent with how ChurchSuite refers to accounts
-* Add support for styling pending events
+* Removed ChurchWeb Updater, Security and Licensing code for Development Purposes: Dev Branch: 11432a.dev
 
-= 1.2.1 =
 
-* Add `limit_to_count` to restrict the number of results
-* Fixed bug where an empty date block would appear at the top of the list
-
-= 1.2.2 =
-
-* Updated "missing site parameter" error message, to "missing account parameter"
-
-= 1.2.3 =
-
-* Improved time display on event listing
