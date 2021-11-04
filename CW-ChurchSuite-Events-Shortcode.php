@@ -4,17 +4,16 @@ Plugin Name: Add ChurchSuite events shortcode
 Plugin URI: https://ChurchWeb.uk
 Description: Dev Branch: 11432a.dev : Presents events from a ChurchSuite account using a shortcode in posts or pages.
 
-***** Not for Production Use *****
-
-** For ChurchWeb Internal Development Use Only **
-
-** Not for onwards sharing or transmission **
-
-* Dev Branch: 11432a.dev *
-* 
-
-***** Check Dev Branch Before Merging *****
-
+***** BEGIN CHURCHWEB NOTICE - DO NOT AMEND THIS TEXT AREA  *****
+***** Not for Production Use                                *****
+***** For ChurchWeb Internal Development Use Only           *****
+***** Not for onwards sharing or transmission               *****
+***** Dev Branch: 11432a.dev                                *****
+***** Removed ChurchWeb Updater, Security and Licensing     *****
+***** All Queries to Support@ChurchWeb.uk                   *****
+***** Check Dev Branch Before Merging                       *****
+***** Not for Production Use                                *****
+***** END CHURCHWEB NOTICE - DO NOT AMEND ABOVE TEXT AREA   *****
 
 Tags: churchsuite, events
 Version: 0.1.1
