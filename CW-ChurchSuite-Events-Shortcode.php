@@ -2,9 +2,21 @@
 /*
 Plugin Name: Add ChurchSuite events shortcode
 Plugin URI: https://ChurchWeb.uk
-Description: Presents events from a ChurchSuite account using a shortcode in posts or pages.
+Description: Dev Branch: 11432a.dev : Presents events from a ChurchSuite account using a shortcode in posts or pages.
+
+***** BEGIN CHURCHWEB NOTICE - DO NOT AMEND THIS TEXT AREA  *****
+***** Not for Production Use                                *****
+***** For ChurchWeb Internal Development Use Only           *****
+***** Not for onwards sharing or transmission               *****
+***** Dev Branch: 11432a.dev                                *****
+***** Removed ChurchWeb Updater, Security and Licensing     *****
+***** All Queries to Support@ChurchWeb.uk                   *****
+***** Check Dev Branch Before Merging                       *****
+***** Not for Production Use                                *****
+***** END CHURCHWEB NOTICE - DO NOT AMEND ABOVE TEXT AREA   *****
+
 Tags: churchsuite, events
-Version: 1.2.3.1
+Version: 0.2.4
 Author: ChurchWeb
 Author URI: https://ChurchWeb.uk
 License: GPL2 or later
@@ -43,7 +55,7 @@ function cs_events_shortcode($atts = [])
         $link_titles = (bool) $atts['link_titles'];
         unset($atts['link_titles']);
     } else {
-        $link_titles = false;
+        $link_titles = true;
     }
 
     if (isset($atts['show_years'])) {
@@ -71,14 +83,14 @@ function cs_events_shortcode($atts = [])
         $show_locations = (bool) $atts['show_locations'];
         unset($atts['show_locations']);
     } else {
-        $show_locations = false;
+        $show_locations = true;
     }
 
     if (isset($atts['show_descriptions'])) {
         $show_descriptions = (bool) $atts['show_descriptions'];
         unset($atts['show_descriptions']);
     } else {
-        $show_descriptions = true;
+        $show_descriptions = false;
     }
 
     if (isset($atts['limit_to_count'])) {
@@ -86,6 +98,13 @@ function cs_events_shortcode($atts = [])
         unset($atts['limit_to_count']);
     } else {
         $limit_to_count = true;
+    }
+
+    if (isset($atts['sign_up_events_only'])) {
+        $sign_up_events_only = (bool) $atts['sign_up_events_only'];
+        unset($atts['sign_up_events_only']);
+    } else {
+        $sign_up_events_only = false;
     }
 
     try {
@@ -111,6 +130,8 @@ function cs_events_shortcode($atts = [])
             $data_to_loop = $data;
         }
 
+        $output .= '<div id="cs_events-container">';
+
         // This is where most of the magic happens
         foreach ($data_to_loop as $event) {
             // Build the event URL, we use this a couple of times
@@ -120,12 +141,24 @@ function cs_events_shortcode($atts = [])
                 '.churchsuite.co.uk/events/' .
                 $event->identifier;
 
+            // Find event color
+            $event_color = '#' .
+             $event->brand->color;
+
+            // Find event image use brand logo if none set
+            if (isset($event->images->lg)){
+              $event_image = $event->images->lg->url;   
+            } else {
+              $event_image = $event->brand->logo;
+            }
+
             // Build the object for the JSON-LD representation
             $json_ld = [
                 '@context' => 'http://www.schema.org',
                 '@type' => 'Event',
                 'name' => $event->name,
                 'url' => $event_url,
+                'image' => $event_image,
                 'description' => $event->description,
                 'startDate' => date(
                     DATE_ISO8601,
@@ -135,12 +168,12 @@ function cs_events_shortcode($atts = [])
                     DATE_ISO8601,
                     strtotime($event->datetime_end)
                 ),
+                'organizer' => [
+                    'name' => get_bloginfo( 'name' ),
+                    'url' => get_site_url(),
+                ],
             ];
 
-            // Tack on the image, if we have one
-            if (isset($event->images->lg)) {
-                $json_ld['image'] = $event->images->lg->url;
-            }
 
             // Set attendance mode
             if ($event->location->type == 'online') {
@@ -170,7 +203,7 @@ function cs_events_shortcode($atts = [])
                 $json_ld['eventStatus'] = 'https://schema.org/EventScheduled';
             }
 
-            // And output it!
+            // And output JSON-LD
             $output .=
                 '<script type="application/ld+json">' .
                 json_encode($json_ld) .
@@ -181,51 +214,40 @@ function cs_events_shortcode($atts = [])
 
             $date = date('Y-m-d', $start_time);
 
-            // Make sure we only show the date once per day
-            if ($date != $last_date && $show_date) {
-                if ($last_date == null) {
-                    $output .= '<div class="cs_events--dateblock">';
-                } else {
-                    $output .= '</div><div class="cs_events--dateblock">';
-                }
-                $last_date = $date;
-                $output .=
-                    '<h3 class="cs_events--date">' . date('l j F', $start_time);
-
-                if (
-                    $show_years and
-                    ($show_years == 'always' or
-                        $show_years == 'different' and
-                            date('Y', $start_time) != date('Y'))
-                ) {
-                    $output .= ' ' . date('Y', $start_time);
-                }
-
-                $output .= '</h3>';
+            // Select if Sign up only events
+            if ($sign_up_events_only == true && $event->signup_options->signup_enabled == '0') {            
+            $output .= '<div style="display:none">';
             }
+             else {
+                $output .= '<div class="cs_events--event">';  
+             }
 
-            $output .= '<div class="cs_events--event">';
-
-            if (isset($event->images->thumb) && $event->description != '') {
+            // Output the event image
                 if ($link_titles == true) {
                     $output .=
-                        '<a href="https://' .
-                        $account .
-                        '.churchsuite.co.uk/events/' .
-                        $event->identifier .
-                        '">';
+                        '<a href="' . $event_url . '">';
                 }
-                $output .=
-                    '<img class="cs_events--event--image hidden-xs hidden-sm" src="' .
-                    $event->images->thumb->url .
-                    '">';
+                if (isset($event->images->lg)){
+                    $output .=
+                    '<img class="cs_events--event-image" src="' .
+                    $event_image .
+                    '" alt="' .  $event->name .'">';  
+                    } else {  $output .=
+                    '<img class="cs_events--brand-logo" src="' .
+                    $event->brand->logo .
+                    '" alt="' . $event->brand->name .'">'; 
+                 }
                 if ($link_titles == true) {
                     $output .= '</a>';
                 }
-            }
-
+            // Output the event info panel
+            $output .= '<div class="cs_events--event-info-panel">';   
             // Output the event title
-            $output .= '<h4 class="cs_events--event--title">';
+            if ($link_titles == true) {
+                $output .= '<a href="' . $event_url . '">';
+            }
+            $output .= '<div class="cs_events--event-title" style="background-color:'.
+                $event_color . '"><h3 class="cs_events--event-title">';
 
             if ($event->status == 'cancelled') {
                 $output .= '<span style="text-decoration:line-through">';
@@ -233,28 +255,10 @@ function cs_events_shortcode($atts = [])
                 $output .= '<span style="font-style: italic">';
             }
 
-            if ($link_titles == true) {
-                $output .= '<a href="' . $event_url . '">';
-            }
-
             $output .=
-                '<span class="cs_events--event--time">' .
-                date('g.i a: ', $start_time);
-
-            if ($show_end_times) {
-                $output .=
-                    ' &ndash; ' .
-                    date('g.i a', strtotime($event->datetime_end));
-            }
-
-            $output .=
-                '</span><span class="cs_events--event--name">' .
+                '</span><span class="cs_events--event-name">' .
                 $event->name .
                 '</span>';
-
-            if ($link_titles == true) {
-                $output .= '</a>';
-            }
 
             if ($event->status == 'cancelled') {
                 $output .= '</span>';
@@ -262,33 +266,82 @@ function cs_events_shortcode($atts = [])
                 $output .= '?</span>';
             }
 
-            $output .= '</h4>';
+            $output .= '</h3></div>';
+
+            if ($link_titles == true) {
+                $output .= '</a>';
+            }
+
+            $output .= '<ul>';
 
             if ($event->status == 'cancelled') {
                 $output .=
-                    '<p><strong>This event has been cancelled.</strong></p>';
-            }
+                    '<li>This event has been cancelled.</li></ul></div>';
+            } else {
 
-            if ($show_locations && $event->location->name) {
+             $output .=
+                    '<li><span class="cs_events--event-date_icon"></span><span class="cs_events--event-date">' .
+                    date('l j F', $start_time);
+
+                 if (
+                        $show_years and
+                     ($show_years == 'always' or
+                            $show_years == 'different' and
+                                date('Y', $start_time) != date('Y'))
+                   ) {
+                       $output .= ' ' . date('Y', $start_time);
+                       '</span></li>';
+                    }
+
                 $output .=
-                    '<p><i>' .
-                    htmlspecialchars_decode($event->location->name) .
-                    '</i></p>';
-            }
+                   '<li><span class="cs_events--event-time_icon"></span><span class="cs_events--event-time">' .
+                    date('g:i a', $start_time);
 
+              if ($show_end_times) {
+                  $output .=
+                        ' &ndash; ' .
+                        date('g.i a', strtotime($event->datetime_end));
+              }
+              $output .= '</span></li>';
+
+             if ($show_locations && $event->location->name) {
+                   $output .=
+                       '<li><span class="cs_events--event-loc_icon"></span><span class="cs_events--event-loc">' .
+                        htmlspecialchars_decode($event->location->name) .
+                      '</span></li>';
+             }
+             $output .= '</ul>';
+
+               // Output the event sign up button
+              if ($event->signup_options->signup_enabled == '1') {
+                    $output .= '<a class="cs_events--signup-button__link" href="' . $event_url . '"><div class="cs_events--signup-button" style="background-color:'.
+                $event_color . '">Sign Up</div></a>';
+              }
+            $output .= '</div>'; 
+
+            }
+            // Output the event description
             if ($show_descriptions and $event->description != '') {
-                $output .= htmlspecialchars_decode($event->description);
+                $output .= '<div class="cs_events--description">' .
+                    htmlspecialchars_decode($event->description) .
+                    '</div>';
             }
 
             $output .= '<div style="clear:both"></div></div>';
         }
-
         $output .= '</div>';
-
         return $output;
     } catch (Exception $e) {
         return $e->getMessage();
     }
 }
 
+
 add_shortcode('churchsuite_events', 'cs_events_shortcode');
+
+function CW_load_plugin_css() {
+    $plugin_url = plugin_dir_url( __FILE__ );
+
+    wp_enqueue_style( 'events-grid', $plugin_url . 'styles/events-list.css' );
+}
+add_action( 'wp_enqueue_scripts', 'CW_load_plugin_css' );

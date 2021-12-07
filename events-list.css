@@ -1,0 +1,133 @@
+@charset "UTF-8";
+/*
+Plugin Name: Add ChurchSuite events shortcode
+Plugin URI: https://ChurchWeb.uk
+*/
+#cs_events-container {
+     display: flex;
+     justify-content: space-around;
+	  flex-wrap: wrap;
+      width:100%;
+      max-width: 100%;
+}
+
+.cs_events--event { 
+    background-color: white;
+    width: 100%;
+    max-width: 100%; 
+    font-size: 16px;
+    margin: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    position: relative;
+    }
+
+/* Event Image - churchsuite encourages use of 16:9 aspect ratio for event images*/
+.cs_events--event-image {
+    display: inline-block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+}
+/* Event Image - if logo is used churchsuite encourages use of 1000x200px logos*/
+.cs_events--brand-logo {
+    display: inline-block;
+    width: 100%;
+}
+/* Event Info Panel */
+.cs_events--event-info-panel {
+    display: inline-block;
+    width: calc(100% - 20px);
+    margin: 10px;
+    vertical-align: top;
+    position: relative;
+}
+/* Event Title */
+#cs_events-container .cs_events--event .cs_events--event-info-panel a {
+    text-decoration: none;
+    color:white;
+}
+.cs_events--event-title {
+    vertical-align: top;
+    width: 100%;
+    padding: 20px 10px;
+    margin-bottom: 10px;
+}
+.cs_events--event-title h3.cs_events--event-title {
+    font-size: 18px;
+    font-weight: 600;
+    padding: 0 4px;
+    margin: 0;
+}
+/* Event Info List */
+.cs_events--event-info-panel ul {
+    list-style: none; 
+    margin: 0; 
+    margin-right: 90px;
+    padding: 0;
+}
+
+.cs_events--event-date_icon:before {
+    content: url('https://api.iconify.design/fontisto/date.svg');
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 10px 0 0;
+}
+.cs_events--event-time_icon:before {
+    content: url('https://api.iconify.design/akar-icons/clock.svg');
+    display: inline-block;
+    vertical-align: middle; 
+    margin: 0 10px 0 0;
+}
+.cs_events--event-loc_icon:before {
+    content: url('https://api.iconify.design/gis/location-poi-o.svg');
+    display: inline-block;
+    vertical-align: middle; 
+    margin: 0 10px 0 0;
+}
+/* Event Sign Up Button */
+.cs_events--signup-button {
+    display: block;
+    padding: 20px 10px;
+    margin: 10px;
+    text-align: center;
+    font-weight: 400;
+    color:white;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    border-radius: 50%;
+}
+
+.cs_events--signup-button__link {
+    width: 100%;
+    max-width: 100%;
+}
+
+.cs_events--description {
+    width: calc(100% - 20px);
+    margin: 10px;
+}
+
+/* Media query for larger screens */
+@media only screen and (min-width: 600px) {
+.cs_events--event { 
+    max-width: 800px;
+}
+.cs_events--event-image {
+    width: 40%;
+}
+.cs_events--brand-logo {
+     width: 40%;
+     padding: 60px 0px;   
+}
+.cs_events--event-title {
+    vertical-align: top;
+    width: 80%;
+    margin: 10px 10px 10px -20px;
+}
+/* Event Info Panel */
+.cs_events--event-info-panel {
+    width:  calc(60% - 20px);
+    margin-left: 10px;
+}
+
+}
