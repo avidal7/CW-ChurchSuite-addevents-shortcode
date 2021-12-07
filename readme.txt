@@ -40,3 +40,10 @@ Also embeds a JSON-LD representation of the event, which search engines like Goo
 * Removed ChurchWeb Updater, Security and Licensing code for Development Purposes: Dev Branch: 11432a.dev
 
 
+= Dev Branch 11432a.dev =
+= 0.2.4 =
+
+* Improvements to layout and functionality of listings
+* Added CSS file 
+
+
