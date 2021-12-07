@@ -1,10 +1,10 @@
 
-Plugin Name: Add ChurchSuite events shortcode 11432a.dev
+Plugin Name: Add ChurchSuite events shortcode
 Plugin URI: https://ChurchWeb.uk
-Description: Presents events from a ChurchSuite account using a shortcode in posts or pages. Dev Branch 11432a.dev
+Description: Presents events from a ChurchSuite account using a shortcode in posts or pages.
 Tags: churchsuite, events
-Version: 0.1.1
-Stable tag: v0.1.1
+Version: 0.2.4
+Stable tag: v0.2.4
 Author: ChurchWeb
 Author URI: https://ChurchWeb.uk
 License: GPL2 or later
@@ -15,7 +15,7 @@ Domain Path: /languages
 Requires at least: 5.7
 
 Originally Forked from https://github.com/whitkirkchurch/include-churchsuite-events
-Contributors: jacksonj04
+Contributors: jacksonj04 , Miriam John ,
 
 == Description ==
 
@@ -34,16 +34,9 @@ Also embeds a JSON-LD representation of the event, which search engines like Goo
 
 * Bug Fix: Inappropriate spacing
 
-= Dev Branch 11432a.dev = 
-= based upon 0.1.1
-
-* Removed ChurchWeb Updater, Security and Licensing code for Development Purposes: Dev Branch: 11432a.dev
-
-
-= Dev Branch 11432a.dev =
 = 0.2.4 =
 
 * Improvements to layout and functionality of listings
 * Added CSS file 
-
+* Bug Fix: PHP 8.0 compatibility
 
